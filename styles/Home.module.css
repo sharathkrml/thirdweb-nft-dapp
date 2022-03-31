@@ -1,7 +1,21 @@
 .main {
   background-image: url("../public/background.png");
+  background-size: cover;
+  background-position: 0 70%;
+
 }
-.mainRef{
+.mainRef {
   background-image: url("../public/reference.png");
   background-size: cover;
+}
+.singleDay {
+  font-family: "Single Day", cursive;
+  text-shadow: 2px 2px 10px #9effff;
+}
+.shojumaru {
+  font-family: "Shojumaru", cursive;
+  text-shadow: 2px 2px 10px #9effff;
+}
+.baobao {
+  text-shadow: 2px 2px 10px #1dfefe;
 }
