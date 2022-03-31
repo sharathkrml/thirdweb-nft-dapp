@@ -7,10 +7,9 @@ export default function Home() {
       <Head>
         <title>Bao Bao</title>
         <meta name="description" content="Bao Bao NFT mint page" />
-        <meta http-equiv="content-language" content="en"></meta>
         <link rel="icon" href="/favicon.ico" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
         <link
           href="https://fonts.googleapis.com/css2?family=Shojumaru&family=Single+Day&display=swap"
           rel="stylesheet"
@@ -19,11 +18,21 @@ export default function Home() {
       <nav>
         <div className="flex justify-between ">
           <button className="pb-[0.2rem] pt-2 px-2 m-2 rounded-lg bg-[#1dfefe] shadow-[0px_0px_75px_1px_#1dfede] hover:shadow-[0px_0px_75px_5px_#1dfede]">
-            <Image src="/previous.png" width={`40%`} height={`40%`} />
+            <Image
+              src="/previous.png"
+              width={`40%`}
+              height={`40%`}
+              alt="prev"
+            />
           </button>
           <button className="flex flex-row items-center py-2 px-5 m-2 rounded-lg bg-[#1dfefe] shadow-[0px_0px_75px_1px_#1dfede] hover:shadow-[0px_0px_75px_5px_#1dfede]">
             <div className="text pr-2">Connect Wallet</div>
-            <Image src="/wallet.png" width={`40%`} height={`40%`} />
+            <Image
+              src="/wallet.png"
+              width={`40%`}
+              height={`40%`}
+              alt="wallet"
+            />
           </button>
         </div>
       </nav>
