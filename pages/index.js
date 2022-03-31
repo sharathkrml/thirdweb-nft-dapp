@@ -2,9 +2,17 @@ import Head from "next/head";
 import Image from "next/image";
 import style from "../styles/Home.module.css";
 import Link from "next/link";
+import Modal from "react-modal";
+import WalletComponent from "../components/WalletComponent";
+Modal.setAppElement("#root");
+import { useState } from "react";
 export default function Home() {
+  const [isOpen, setIsOpen] = useState(false);
+  function toggleModal() {
+    setIsOpen(!isOpen);
+  }
   return (
-    <div className={`${style.main} h-screen`}>
+    <div className={`${style.main} h-screen`} id="root">
       <Head>
         <title>Bao Bao</title>
         <meta name="description" content="Bao Bao NFT mint page" />
@@ -32,7 +40,10 @@ export default function Home() {
                 Inventory
               </a>
             </Link>
-            <button className="flex flex-row items-center py-2 px-5 m-2 rounded-lg bg-[#1dfefe] shadow-[0px_0px_75px_1px_#1dfede] hover:shadow-[0px_0px_75px_5px_#1dfede]">
+            <button
+              onClick={toggleModal}
+              className="flex flex-row items-center py-2 px-5 m-2 rounded-lg bg-[#1dfefe] shadow-[0px_0px_75px_1px_#1dfede] hover:shadow-[0px_0px_75px_5px_#1dfede]"
+            >
               <div className="text pr-2">Connect Wallet</div>
               <Image
                 src="/wallet.png"
@@ -45,7 +56,10 @@ export default function Home() {
         </div>
       </nav>
       <section>
-        <div className="flex mt-[5%]  mx-24">
+        <div
+          style={{ display: `${isOpen ? "none" : ""}` }}
+          className="flex mt-[5%]  mx-24"
+        >
           <img
             className="border-[8px] w-[40%] h-[40%] border-black rounded-[10%]"
             src="./bao-bao.png"
@@ -74,6 +88,37 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <Modal
+        isOpen={isOpen}
+        onRequestClose={toggleModal}
+        contentLabel="My dialog"
+        style={{
+          overlay: {
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: "rgba(255, 255, 255, 0.1)",
+          },
+          content: {
+            position: "absolute",
+            top: "5rem",
+            bottom: "5rem",
+            left: "15rem",
+            right: "15rem",
+            border: "1px solid #ccc",
+            background: "rgba(255,255,255,0.1)",
+            overflow: "auto",
+            WebkitOverflowScrolling: "touch",
+            borderRadius: "10px",
+            outline: "none",
+            padding: "0px",
+          },
+        }}
+      >
+        <WalletComponent />
+      </Modal>
     </div>
   );
 }
