@@ -47,7 +47,7 @@ export default function Home() {
             <h2 className={`${style.singleDay} text-white text-5xl`}>
               Join the revolution now!
             </h2>
-            <h1 className={`${style.shojumaru} text-white text-6xl`}>
+            <h1 className={`${style.shojumaru} text-white text-5xl`}>
               MINT YOUR{" "}
               <span className={`${style.baobao} text-[#1dfefe]`}>BAO-BAO</span>
             </h1>
