@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
 import style from "../styles/Home.module.css";
+import Link from "next/link";
 export default function Home() {
   return (
     <div className={`${style.main} h-screen`}>
@@ -25,15 +26,22 @@ export default function Home() {
               alt="prev"
             />
           </button>
-          <button className="flex flex-row items-center py-2 px-5 m-2 rounded-lg bg-[#1dfefe] shadow-[0px_0px_75px_1px_#1dfede] hover:shadow-[0px_0px_75px_5px_#1dfede]">
-            <div className="text pr-2">Connect Wallet</div>
-            <Image
-              src="/wallet.png"
-              width={`40%`}
-              height={`40%`}
-              alt="wallet"
-            />
-          </button>
+          <div className="flex items-center">
+            <Link href="/inventory">
+              <a className="py-3 px-5 m-2 border-2 text-white rounded-lg border-[#1dfefe] hover:bg-[#1dfefe] hover:text-black hover:shadow-[0px_0px_75px_5px_#1dfede]">
+                Inventory
+              </a>
+            </Link>
+            <button className="flex flex-row items-center py-2 px-5 m-2 rounded-lg bg-[#1dfefe] shadow-[0px_0px_75px_1px_#1dfede] hover:shadow-[0px_0px_75px_5px_#1dfede]">
+              <div className="text pr-2">Connect Wallet</div>
+              <Image
+                src="/wallet.png"
+                width={`40%`}
+                height={`40%`}
+                alt="wallet"
+              />
+            </button>
+          </div>
         </div>
       </nav>
       <section>
