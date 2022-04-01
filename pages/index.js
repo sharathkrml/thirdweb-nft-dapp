@@ -2,22 +2,34 @@ import Head from "next/head";
 import style from "../styles/Home.module.css";
 import Modal from "react-modal";
 import WalletComponent from "../components/WalletComponent";
-Modal.setAppElement("#root");
 import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
-import { useAddress } from "@thirdweb-dev/react";
-
+import { useAddress, useNFTDrop } from "@thirdweb-dev/react";
+import { CONTRACTADDR } from "../constants";
+Modal.setAppElement("#root");
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
   const address = useAddress();
+  const nftContract = useNFTDrop(CONTRACTADDR);
   const toggleModal = () => {
     setIsOpen(!isOpen);
+  };
+  const getAllNFT = async () => {
+    try {
+      const all = await nftContract.getAll();
+      console.log(all);
+    } catch (error) {
+      console.log(error);
+    }
   };
   useEffect(() => {
     if (address) {
       setIsOpen(false);
     }
   }, [address]);
+  useEffect(() => {
+    getAllNFT();
+  }, []);
 
   return (
     <div className={`${style.main} h-screen`} id="root">
@@ -36,7 +48,7 @@ export default function Home() {
           rel="stylesheet"
         />
       </Head>
-      <Navbar toggleModal={toggleModal} />
+      <Navbar toggleModal={toggleModal} main/>
       <section>
         <div
           style={{ display: `${isOpen ? "none" : ""}` }}

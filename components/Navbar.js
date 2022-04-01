@@ -1,16 +1,28 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { useAddress, useDisconnect } from "@thirdweb-dev/react";
-function Navbar({ toggleModal }) {
+function Navbar({ toggleModal, main }) {
+  const router = useRouter();
   const address = useAddress();
   const disconnect = useDisconnect();
   return (
     <nav>
-      <div className="flex justify-between ">
-        <button className="pb-[0.2rem] pt-2 px-2 m-2 rounded-lg bg-[#1dfefe] shadow-[0px_0px_75px_1px_#1dfede] hover:shadow-[0px_0px_75px_5px_#1dfede]">
-          <Image src="/previous.png" width={`40%`} height={`40%`} alt="prev" />
-        </button>
+      <div className={`flex ${main ? "justify-end" : "justify-between"} `}>
+        {!main && (
+          <button
+            onClick={() => router.push("/")}
+            className="pb-[0.2rem] pt-2 px-2 m-2 rounded-lg bg-[#1dfefe] shadow-[0px_0px_75px_1px_#1dfede] hover:shadow-[0px_0px_75px_5px_#1dfede]"
+          >
+            <Image
+              src="/previous.png"
+              width={`40%`}
+              height={`40%`}
+              alt="prev"
+            />
+          </button>
+        )}
         <div className="flex items-center">
           <Link href="/inventory">
             <a className="py-3 px-5 m-2 border-2 text-white rounded-lg border-[#1dfefe] hover:bg-[#1dfefe] hover:text-black hover:shadow-[0px_0px_75px_5px_#1dfede]">
