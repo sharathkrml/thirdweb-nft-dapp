@@ -24,11 +24,13 @@ function Navbar({ toggleModal, main }) {
           </button>
         )}
         <div className="flex items-center">
-          <Link href="/inventory">
-            <a className="py-3 px-5 m-2 border-2 text-white rounded-lg border-[#1dfefe] hover:bg-[#1dfefe] hover:text-black hover:shadow-[0px_0px_75px_5px_#1dfede]">
-              Inventory
-            </a>
-          </Link>
+          {main && (
+            <Link href="/inventory">
+              <a className="py-3 px-5 m-2 border-2 text-white rounded-lg border-[#1dfefe] hover:bg-[#1dfefe] hover:text-black hover:shadow-[0px_0px_75px_5px_#1dfede]">
+                Inventory
+              </a>
+            </Link>
+          )}
           {address ? (
             <div className="flex flex-row items-center py-2 px-5 m-2 rounded-lg bg-[#1dfefe] shadow-[0px_0px_75px_1px_#1dfede] hover:shadow-[0px_0px_75px_5px_#1dfede]">
               <div className="text py-2 pr-2">{address.substring(0, 9)}...</div>

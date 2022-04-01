@@ -14,23 +14,11 @@ export default function Home() {
   const toggleModal = () => {
     setIsOpen(!isOpen);
   };
-  const getAllNFT = async () => {
-    try {
-      const all = await nftContract.getAll();
-      console.log(all);
-    } catch (error) {
-      console.log(error);
-    }
-  };
   useEffect(() => {
     if (address) {
       setIsOpen(false);
     }
   }, [address]);
-  useEffect(() => {
-    getAllNFT();
-  }, []);
-
   return (
     <div className={`${style.main} h-screen`} id="root">
       <Head>
@@ -48,7 +36,7 @@ export default function Home() {
           rel="stylesheet"
         />
       </Head>
-      <Navbar toggleModal={toggleModal} main/>
+      <Navbar toggleModal={toggleModal} main />
       <section>
         <div
           style={{ display: `${isOpen ? "none" : ""}` }}

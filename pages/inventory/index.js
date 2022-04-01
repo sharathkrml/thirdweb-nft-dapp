@@ -20,9 +20,11 @@ function Inventory() {
       console.log(error);
     }
   };
+  
   useEffect(() => {
     getAllNFT();
   }, []);
+
   const toggleModal = () => {
     setIsOpen(!isOpen);
   };
