@@ -12,6 +12,7 @@ Modal.setAppElement("#root");
 function Inventory() {
   const [isOpen, setIsOpen] = useState(false);
   const [allNfts, setAllNfts] = useState([]);
+  const [myNfts, setMyNfts] = useState([]);
   const address = useAddress();
   const nftContract = useNFTDrop(CONTRACTADDR);
   const getAllNFT = async () => {
@@ -23,10 +24,26 @@ function Inventory() {
       console.log(error);
     }
   };
+  const getMyNfts = async () => {
+    try {
+      console.log("mynfts");
+      const res = await nftContract.getOwned(address);
+      setMyNfts(res);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     getAllNFT();
   }, []);
+  useEffect(() => {
+    if (address) {
+      setIsOpen(false);
+      getMyNfts();
+    }
+  }, [address]);
 
   const toggleModal = () => {
     setIsOpen(!isOpen);
@@ -34,7 +51,7 @@ function Inventory() {
   const renderNFT = (nft, i) => {
     return (
       <div className="relative">
-        <img src={nft.metadata.image} alt="i" />
+        <img src={nft.metadata.image} alt={i} />
         {constants.AddressZero === nft.owner && (
           <p className="absolute top-10 text-red-500 -rotate-45">not minted</p>
         )}
