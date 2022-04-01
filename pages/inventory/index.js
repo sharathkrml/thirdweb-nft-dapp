@@ -54,7 +54,7 @@ function Inventory() {
       <div className="relative">
         <img src={nft.metadata.image} alt={i} />
         {constants.AddressZero === nft.owner && (
-          <p className="absolute top-10 text-red-500 -rotate-45">not minted</p>
+          <p className="absolute top-2 -left-5 text-slate-200 bg-red-500 px-2 text-lg -rotate-45">not minted</p>
         )}
         <h3>{nft.metadata.name}</h3>
         <p>{nft.metadata.description.substring(0, 50)}</p>
