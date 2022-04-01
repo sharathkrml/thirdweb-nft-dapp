@@ -54,7 +54,9 @@ function Inventory() {
       <div className="relative my-10">
         <img src={nft.metadata.image} alt={i} />
         {constants.AddressZero === nft.owner && (
-          <p className="absolute top-2 -left-5 text-slate-200 bg-red-500 px-2 text-lg -rotate-45">not minted</p>
+          <p className="absolute top-2 -left-5 text-slate-200 bg-red-500 px-2 text-lg -rotate-45">
+            not minted
+          </p>
         )}
         <h3>{nft.metadata.name}</h3>
         <p>{nft.metadata.description.substring(0, 50)}</p>
@@ -115,8 +117,8 @@ function Inventory() {
           </div>
         </div>
       </section>
-      <section>
-        <div className="ml-10 grid lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2">
+      <section className="flex items-center justify-center">
+        <div className="grid lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2">
           {selectAllNft
             ? allNfts.map((nft, i) => {
                 return renderNFT(nft, i);
