@@ -51,7 +51,7 @@ function Inventory() {
   };
   const renderNFT = (nft, i) => {
     return (
-      <div className="relative">
+      <div className="relative my-10">
         <img src={nft.metadata.image} alt={i} />
         {constants.AddressZero === nft.owner && (
           <p className="absolute top-2 -left-5 text-slate-200 bg-red-500 px-2 text-lg -rotate-45">not minted</p>
@@ -70,7 +70,7 @@ function Inventory() {
     );
   };
   return (
-    <div className={`${style.main}`} id="root">
+    <div className={`${style.main} min-h-screen`} id="root">
       <Head>
         <title>Bao Bao</title>
         <meta name="description" content="Bao Bao NFT mint page" />
