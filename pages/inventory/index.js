@@ -13,6 +13,7 @@ function Inventory() {
   const [isOpen, setIsOpen] = useState(false);
   const [allNfts, setAllNfts] = useState([]);
   const [myNfts, setMyNfts] = useState([]);
+  const [selectAllNft, setSelectAllNft] = useState(true);
   const address = useAddress();
   const nftContract = useNFTDrop(CONTRACTADDR);
   const getAllNFT = async () => {
@@ -57,6 +58,14 @@ function Inventory() {
         )}
         <h3>{nft.metadata.name}</h3>
         <p>{nft.metadata.description.substring(0, 50)}</p>
+        {nft.owner !== constants.AddressZero ? (
+          <p>
+            Owner:{" "}
+            {nft.owner === address ? "You" : nft.owner.substring(0, 9) + "..."}
+          </p>
+        ) : (
+          ""
+        )}
       </div>
     );
   };
@@ -82,10 +91,24 @@ function Inventory() {
         <div style={{ display: `${isOpen ? "none" : ""}` }}>
           <div className="flex justify-center">
             <div>
-              <button className="p-2 rounded-md mr-2 text-white border-2 border-[#1dfefe]">
+              <button
+                onClick={() => setSelectAllNft(true)}
+                className={`p-2 rounded-md mr-2 ${
+                  selectAllNft
+                    ? "border-2 border-[#1dfefe] bg-[#1dfefe]"
+                    : "border-2 border-[#1dfefe] text-white"
+                }`}
+              >
                 All
               </button>
-              <button className="p-2 rounded-md border-2 border-[#1dfefe] bg-[#1dfefe]">
+              <button
+                onClick={() => setSelectAllNft(false)}
+                className={`p-2 rounded-md ${
+                  !selectAllNft
+                    ? "border-2 border-[#1dfefe] bg-[#1dfefe]"
+                    : "border-2 text-white  border-[#1dfefe]"
+                }`}
+              >
                 My NFTs
               </button>
             </div>
@@ -94,9 +117,13 @@ function Inventory() {
       </section>
       <section>
         <div className="ml-10 grid lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2">
-          {allNfts.map((nft, i) => {
-            return renderNFT(nft, i);
-          })}
+          {selectAllNft
+            ? allNfts.map((nft, i) => {
+                return renderNFT(nft, i);
+              })
+            : myNfts.map((nft, i) => {
+                return renderNFT(nft, i);
+              })}
         </div>
       </section>
       <Modal

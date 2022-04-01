@@ -9,7 +9,10 @@ import { CONTRACTADDR } from "../constants";
 Modal.setAppElement("#root");
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
+  const [claimed, setClaimed] = useState(0);
+  const [total, setTotal] = useState(0);
   const address = useAddress();
+  const [loading, setLoading] = useState(false);
   const nftContract = useNFTDrop(CONTRACTADDR);
   const toggleModal = () => {
     setIsOpen(!isOpen);
@@ -19,6 +22,58 @@ export default function Home() {
       setIsOpen(false);
     }
   }, [address]);
+  const mint = async () => {
+    try {
+      console.log("minting...");
+      setLoading(true);
+      const res = await nftContract.claimTo(address, 1);
+      console.log(res);
+      getTotalSupply();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const getTotalSupply = async () => {
+    setLoading(true);
+    const unclaimed = await nftContract.totalUnclaimedSupply();
+    const claimed = await nftContract.totalClaimedSupply();
+    setClaimed(claimed.toString());
+    setTotal(unclaimed.toNumber() + claimed.toNumber());
+    setLoading(false);
+  };
+  useEffect(() => {
+    getTotalSupply();
+  }, [nftContract]);
+
+  const returnButton = () => {
+    if (!address) {
+      return (
+        <button
+          onClick={toggleModal}
+          className="p-3  font-bold rounded-lg bg-[#1dfefe] shadow-[0px_0px_75px_1px_#1dfede] hover:shadow-[0px_0px_75px_5px_#1dfede]"
+        >
+          Connect Wallet
+        </button>
+      );
+    }
+    if (loading) {
+      return (
+        <button className="p-3  font-bold rounded-lg bg-[#1dfefe] shadow-[0px_0px_75px_1px_#1dfede] hover:shadow-[0px_0px_75px_5px_#1dfede]">
+          loading
+        </button>
+      );
+    }
+    if (address && !loading) {
+      return (
+        <button
+          onClick={mint}
+          className="p-3  font-bold rounded-lg bg-[#1dfefe] shadow-[0px_0px_75px_1px_#1dfede] hover:shadow-[0px_0px_75px_5px_#1dfede]"
+        >
+          Mint({claimed}/{total})
+        </button>
+      );
+    }
+  };
   return (
     <div className={`${style.main} h-screen`} id="root">
       <Head>
@@ -62,20 +117,7 @@ export default function Home() {
               porro! Ullam necessitatibus laborum quo ea soluta? Tempore debitis
               sed amet ipsam excepturi!
             </p>
-            <div className="btn-wrapper">
-              {address ? (
-                <button className="p-3  font-bold rounded-lg bg-[#1dfefe] shadow-[0px_0px_75px_1px_#1dfede] hover:shadow-[0px_0px_75px_5px_#1dfede]">
-                  MINT(0.5 MATIC)
-                </button>
-              ) : (
-                <button
-                  onClick={toggleModal}
-                  className="p-3  font-bold rounded-lg bg-[#1dfefe] shadow-[0px_0px_75px_1px_#1dfede] hover:shadow-[0px_0px_75px_5px_#1dfede]"
-                >
-                  Connect Wallet
-                </button>
-              )}
-            </div>
+            <div className="btn-wrapper">{returnButton()}</div>
           </div>
         </div>
       </section>
