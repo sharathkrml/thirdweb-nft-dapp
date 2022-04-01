@@ -7,20 +7,23 @@ import { useAddress, useNFTDrop } from "@thirdweb-dev/react";
 import Modal from "react-modal";
 import WalletComponent from "../../components/WalletComponent";
 import { CONTRACTADDR } from "../../constants";
+import { constants } from "ethers";
 Modal.setAppElement("#root");
 function Inventory() {
   const [isOpen, setIsOpen] = useState(false);
+  const [allNfts, setAllNfts] = useState([]);
   const address = useAddress();
   const nftContract = useNFTDrop(CONTRACTADDR);
   const getAllNFT = async () => {
     try {
-      const all = await nftContract.getAll();
-      console.log(all);
+      const res = await nftContract.getAll();
+      setAllNfts(res);
+      console.log(res);
     } catch (error) {
       console.log(error);
     }
   };
-  
+
   useEffect(() => {
     getAllNFT();
   }, []);
@@ -28,8 +31,20 @@ function Inventory() {
   const toggleModal = () => {
     setIsOpen(!isOpen);
   };
+  const renderNFT = (nft, i) => {
+    return (
+      <div className="relative">
+        <img src={nft.metadata.image} alt="i" />
+        {constants.AddressZero === nft.owner && (
+          <p className="absolute top-10 text-red-500 -rotate-45">not minted</p>
+        )}
+        <h3>{nft.metadata.name}</h3>
+        <p>{nft.metadata.description.substring(0, 50)}</p>
+      </div>
+    );
+  };
   return (
-    <div className={`${style.main} h-screen`} id="root">
+    <div className={`${style.main}`} id="root">
       <Head>
         <title>Bao Bao</title>
         <meta name="description" content="Bao Bao NFT mint page" />
@@ -58,6 +73,13 @@ function Inventory() {
               </button>
             </div>
           </div>
+        </div>
+      </section>
+      <section>
+        <div className="ml-10 grid lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2">
+          {allNfts.map((nft, i) => {
+            return renderNFT(nft, i);
+          })}
         </div>
       </section>
       <Modal
