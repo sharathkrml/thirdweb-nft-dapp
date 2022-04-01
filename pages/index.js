@@ -1,16 +1,24 @@
 import Head from "next/head";
-import Image from "next/image";
 import style from "../styles/Home.module.css";
-import Link from "next/link";
 import Modal from "react-modal";
 import WalletComponent from "../components/WalletComponent";
 Modal.setAppElement("#root");
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Navbar from "../components/Navbar";
+import { useAddress } from "@thirdweb-dev/react";
+
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
-  function toggleModal() {
+  const address = useAddress();
+  const toggleModal = () => {
     setIsOpen(!isOpen);
-  }
+  };
+  useEffect(() => {
+    if (address) {
+      setIsOpen(false);
+    }
+  }, [address]);
+
   return (
     <div className={`${style.main} h-screen`} id="root">
       <Head>
@@ -18,43 +26,17 @@ export default function Home() {
         <meta name="description" content="Bao Bao NFT mint page" />
         <link rel="icon" href="/favicon.ico" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="true"
+        />
         <link
           href="https://fonts.googleapis.com/css2?family=Shojumaru&family=Single+Day&display=swap"
           rel="stylesheet"
         />
       </Head>
-      <nav>
-        <div className="flex justify-between ">
-          <button className="pb-[0.2rem] pt-2 px-2 m-2 rounded-lg bg-[#1dfefe] shadow-[0px_0px_75px_1px_#1dfede] hover:shadow-[0px_0px_75px_5px_#1dfede]">
-            <Image
-              src="/previous.png"
-              width={`40%`}
-              height={`40%`}
-              alt="prev"
-            />
-          </button>
-          <div className="flex items-center">
-            <Link href="/inventory">
-              <a className="py-3 px-5 m-2 border-2 text-white rounded-lg border-[#1dfefe] hover:bg-[#1dfefe] hover:text-black hover:shadow-[0px_0px_75px_5px_#1dfede]">
-                Inventory
-              </a>
-            </Link>
-            <button
-              onClick={toggleModal}
-              className="flex flex-row items-center py-2 px-5 m-2 rounded-lg bg-[#1dfefe] shadow-[0px_0px_75px_1px_#1dfede] hover:shadow-[0px_0px_75px_5px_#1dfede]"
-            >
-              <div className="text pr-2">Connect Wallet</div>
-              <Image
-                src="/wallet.png"
-                width={`40%`}
-                height={`40%`}
-                alt="wallet"
-              />
-            </button>
-          </div>
-        </div>
-      </nav>
+      <Navbar toggleModal={toggleModal} />
       <section>
         <div
           style={{ display: `${isOpen ? "none" : ""}` }}
@@ -81,9 +63,18 @@ export default function Home() {
               sed amet ipsam excepturi!
             </p>
             <div className="btn-wrapper">
-              <button className="p-3  font-bold rounded-lg bg-[#1dfefe] shadow-[0px_0px_75px_1px_#1dfede] hover:shadow-[0px_0px_75px_5px_#1dfede]">
-                MINT(0.5 MATIC)
-              </button>
+              {address ? (
+                <button className="p-3  font-bold rounded-lg bg-[#1dfefe] shadow-[0px_0px_75px_1px_#1dfede] hover:shadow-[0px_0px_75px_5px_#1dfede]">
+                  MINT(0.5 MATIC)
+                </button>
+              ) : (
+                <button
+                  onClick={toggleModal}
+                  className="p-3  font-bold rounded-lg bg-[#1dfefe] shadow-[0px_0px_75px_1px_#1dfede] hover:shadow-[0px_0px_75px_5px_#1dfede]"
+                >
+                  Connect Wallet
+                </button>
+              )}
             </div>
           </div>
         </div>
