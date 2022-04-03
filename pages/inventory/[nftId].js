@@ -8,6 +8,7 @@ import Modal from "react-modal";
 Modal.setAppElement("#root");
 function nftId() {
   const router = useRouter();
+  const [loading, setLoading] = useState(true);
   const { nftId } = router.query;
   console.log(nftId);
   const [isOpen, setIsOpen] = useState(false);
@@ -32,7 +33,18 @@ function nftId() {
           rel="stylesheet"
         />
       </Head>
-      <Navbar toggleModal={toggleModal} nft/>
+      <Navbar toggleModal={toggleModal} nft />
+      <section>
+        <div style={{ display: `${isOpen ? "none" : ""}` }}>
+          {loading ? (
+            <div className="flex h-[75vh] items-center justify-center">
+              <h1>Loading</h1>
+            </div>
+          ) : (
+            <div></div>
+          )}
+        </div>
+      </section>
 
       <Modal
         isOpen={isOpen}
