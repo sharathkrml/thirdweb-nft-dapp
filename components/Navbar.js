@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useAddress, useDisconnect } from "@thirdweb-dev/react";
-function Navbar({ toggleModal, main }) {
+function Navbar({ toggleModal, main, nft }) {
   const router = useRouter();
   const address = useAddress();
   const disconnect = useDisconnect();
@@ -12,7 +12,9 @@ function Navbar({ toggleModal, main }) {
       <div className={`flex ${main ? "justify-end" : "justify-between"} `}>
         {!main && (
           <button
-            onClick={() => router.push("/")}
+            onClick={() => {
+              nft ? router.push("/inventory") : router.push("/");
+            }}
             className="pb-[0.2rem] pt-2 px-2 m-2 rounded-lg bg-[#1dfefe] shadow-[0px_0px_75px_1px_#1dfede] hover:shadow-[0px_0px_75px_5px_#1dfede]"
           >
             <Image

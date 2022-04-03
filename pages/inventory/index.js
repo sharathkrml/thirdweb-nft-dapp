@@ -2,6 +2,7 @@ import React from "react";
 import style from "../../styles/Home.module.css";
 import Head from "next/head";
 import Navbar from "../../components/Navbar";
+import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { useAddress, useNFTDrop } from "@thirdweb-dev/react";
 import Modal from "react-modal";
@@ -11,6 +12,7 @@ import { constants } from "ethers";
 Modal.setAppElement("#root");
 function Inventory() {
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
   const [allNfts, setAllNfts] = useState([]);
   const [myNfts, setMyNfts] = useState([]);
   const [selectAllNft, setSelectAllNft] = useState(true);
@@ -51,7 +53,10 @@ function Inventory() {
   };
   const renderNFT = (nft, i) => {
     return (
-      <div className="relative my-10">
+      <div
+        className="relative my-10 cursor-pointer hover:-translate-y-2"
+        onClick={() => router.push("/inventory/"+nft.metadata.id.toString())}
+      >
         <img src={nft.metadata.image} alt={i} />
         {constants.AddressZero === nft.owner && (
           <p className="absolute top-2 -left-5 text-slate-200 bg-red-500 px-2 text-lg -rotate-45">
