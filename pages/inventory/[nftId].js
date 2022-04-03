@@ -1,21 +1,64 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import style from "../../styles/Home.module.css";
 import Head from "next/head";
 import Navbar from "../../components/Navbar";
 import { useRouter } from "next/router";
+import { useAddress, useNFTDrop } from "@thirdweb-dev/react";
+import { CONTRACTADDR } from "../../constants";
 import WalletComponent from "../../components/WalletComponent";
 import Modal from "react-modal";
 Modal.setAppElement("#root");
 function nftId() {
   const router = useRouter();
+  const [nftData, setNftData] = useState();
   const [loading, setLoading] = useState(true);
+  const [transferring, setTransferring] = useState(false);
+  const [transferAddress, setTransferAddress] = useState("");
+  const nftContract = useNFTDrop(CONTRACTADDR);
+  const address = useAddress();
   const { nftId } = router.query;
-  console.log(nftId);
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleModal = () => {
     setIsOpen(!isOpen);
   };
+  const transferNFT = async () => {
+    try {
+      setTransferring(true);
+      const res = await nftContract.transfer(transferAddress, nftId);
+      console.log(res);
+      setTransferring(false);
+      getNFTData();
+    } catch (error) {
+      setTransferring(false);
+
+      console.log(error);
+    }
+  };
+
+  const getNFTData = async () => {
+    try {
+      setLoading(true);
+      const res = await nftContract.get(nftId);
+      setNftData(res);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    if (nftId) {
+      getNFTData();
+    }
+  }, [nftId]);
+  useEffect(() => {
+    if (address) {
+      setIsOpen(false);
+    }
+  }, [address]);
+
   return (
     <div className={`${style.main} min-h-screen`} id="root">
       <Head>
@@ -41,7 +84,53 @@ function nftId() {
               <h1>Loading</h1>
             </div>
           ) : (
-            <div></div>
+            <div className="flex  items-center justify-center">
+              <div className=" w-[80%] grid gap-10 grid-cols-2">
+                <img src={nftData.metadata.image} alt="im" />
+                <div className="details">
+                  <h1 className="text-white text-5xl">
+                    {nftData.metadata.name}
+                  </h1>
+                  <p className="text-white my-5 text-sm">
+                    {nftData.metadata.description}
+                  </p>
+                  {address && address == nftData.owner && (
+                    <>
+                      <input
+                        type="text"
+                        className="w-[70%] p-2 my-2 rounded-lg disabled:bg-slate-600 disabled:cursor-wait focus:outline-none focus:shadow-[0px_0px_75px_1px_#1dfede]"
+                        placeholder="Add Address"
+                        value={transferAddress}
+                        onChange={(e) => setTransferAddress(e.target.value)}
+                        disabled={transferring ? "disabled" : ""}
+                      />
+                      <br />
+                      {transferring ? (
+                        <button
+                          disabled={transferring ? "disabled" : ""}
+                          className="pb-[0.2rem] p-2 m-2 rounded-lg bg-slate-600 cursor-wait shadow-[0px_0px_75px_1px_#1dfede] hover:shadow-[0px_0px_75px_5px_#1dfede]"
+                        >
+                          Transferring
+                        </button>
+                      ) : (
+                        <button
+                          onClick={transferNFT}
+                          className="pb-[0.2rem] p-2 m-2 rounded-lg bg-[#1dfefe] shadow-[0px_0px_75px_1px_#1dfede] hover:shadow-[0px_0px_75px_5px_#1dfede]"
+                        >
+                          Transfer
+                        </button>
+                      )}
+                    </>
+                  )}
+                  {address != nftData.owner && (
+                    <p className="text-white ">
+                      Owner :
+                      <br /> {nftData.owner}
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
           )}
         </div>
       </section>
