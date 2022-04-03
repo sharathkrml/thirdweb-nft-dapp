@@ -8,7 +8,7 @@ import { CONTRACTADDR } from "../../constants";
 import WalletComponent from "../../components/WalletComponent";
 import Modal from "react-modal";
 Modal.setAppElement("#root");
-function nftId() {
+function NFTComponent() {
   const router = useRouter();
   const [nftData, setNftData] = useState();
   const [loading, setLoading] = useState(true);
@@ -170,4 +170,4 @@ function nftId() {
   );
 }
 
-export default nftId;
+export default NFTComponent;
