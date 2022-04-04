@@ -60,7 +60,7 @@ function NFTComponent() {
   }, [address]);
 
   return (
-    <div className={`${style.main} min-h-screen`} id="root">
+    <div className={`${style.main} min-h-screen w-screen box-border`} id="root">
       <Head>
         <title>Bao Bao</title>
         <meta name="description" content="Bao Bao NFT mint page" />
@@ -78,27 +78,27 @@ function NFTComponent() {
       </Head>
       <Navbar toggleModal={toggleModal} nft />
       <section>
-        <div style={{ display: `${isOpen ? "none" : ""}` }}>
+        <div style={{ display: `${isOpen ? "none" : ""} w-screen min-h-screen` }}>
           {loading ? (
             <div className="flex h-[75vh] items-center justify-center">
-              <h1>Loading</h1>
+              <h1 className="text-white">Loading...</h1>
             </div>
           ) : (
-            <div className="flex  items-center justify-center">
-              <div className=" w-[80%] grid gap-10 grid-cols-2">
-                <img src={nftData.metadata.image} alt="im" />
-                <div className="details">
-                  <h1 className="text-white text-5xl">
+            <div className="flex  items-center justify-center w-screen h-screen">
+              <div className="flex flex-col  box-border items-center sm:w-[80%] sm:mt-0 sm:flex-row sm:items-center sm:justify-center">
+                <img src={nftData.metadata.image} alt="im" className="w-[50%] min-w-[200px] border-[8px] border-black mt-0 mr-0 rounded-[10%] sm:mt-[-5%] sm:w-[30%] sm:mr-[15%]"/>
+                <div className="details flex flex-col items-center w-screen mt-0 max-w-[80%] sm:w-[60%] sm:h-[60vh]  sm:items-start sm:pt-[1%]">
+                  <h1 className="text-white text-center text-[10vw] font-bold max-w-[60%] sm:text-[4vw]">
                     {nftData.metadata.name}
                   </h1>
-                  <p className="text-white my-5 text-sm">
+                  <p className="text-white  text-center text-[4vw] sm:text-left sm:text-[1vw] sm:my-[20px]">
                     {nftData.metadata.description}
                   </p>
                   {address && address == nftData.owner && (
                     <>
                       <input
                         type="text"
-                        className="w-[70%] p-2 my-2 rounded-lg disabled:bg-slate-600 disabled:cursor-wait focus:outline-none focus:shadow-[0px_0px_75px_1px_#1dfede]"
+                        className="w-[70%] p-2 my-1 min-h-[50px] min-w-[250px] rounded-lg disabled:bg-slate-600 disabled:cursor-wait focus:outline-none focus:shadow-[0px_0px_75px_1px_#1dfede]"
                         placeholder="Add Address"
                         value={transferAddress}
                         onChange={(e) => setTransferAddress(e.target.value)}
@@ -123,7 +123,7 @@ function NFTComponent() {
                     </>
                   )}
                   {address != nftData.owner && (
-                    <p className="text-white ">
+                    <p className="text-white  text-left ">
                       Owner :
                       <br /> {nftData.owner}
                     </p>

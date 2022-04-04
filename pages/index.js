@@ -50,7 +50,7 @@ export default function Home() {
       return (
         <button
           onClick={toggleModal}
-          className="p-3  font-bold rounded-lg bg-[#1dfefe] shadow-[0px_0px_75px_1px_#1dfede] hover:shadow-[0px_0px_75px_5px_#1dfede]"
+          className="p-3 font-bold rounded-lg bg-[#1dfefe] shadow-[0px_0px_75px_1px_#1dfede] hover:shadow-[0px_0px_75px_5px_#1dfede]"
         >
           Connect Wallet
         </button>
@@ -58,8 +58,8 @@ export default function Home() {
     }
     if (loading) {
       return (
-        <button className="p-3  font-bold rounded-lg bg-[#1dfefe] shadow-[0px_0px_75px_1px_#1dfede] hover:shadow-[0px_0px_75px_5px_#1dfede]">
-          loading
+        <button className="p-3 font-bold rounded-lg bg-[#1dfefe] shadow-[0px_0px_75px_1px_#1dfede] hover:shadow-[0px_0px_75px_5px_#1dfede]">
+          loading..
         </button>
       );
     }
@@ -67,7 +67,7 @@ export default function Home() {
       return (
         <button
           onClick={mint}
-          className="p-3  font-bold rounded-lg bg-[#1dfefe] shadow-[0px_0px_75px_1px_#1dfede] hover:shadow-[0px_0px_75px_5px_#1dfede]"
+          className="p-3 font-bold rounded-lg bg-[#1dfefe] shadow-[0px_0px_75px_1px_#1dfede] hover:shadow-[0px_0px_75px_5px_#1dfede]"
         >
           Mint({claimed}/{total})
         </button>
@@ -75,7 +75,7 @@ export default function Home() {
     }
   };
   return (
-    <div className={`${style.main} h-screen`} id="root">
+    <div className={`${style.main} min-h-screen w-screen box-border`} id="root">
       <Head>
         <title>Bao Bao</title>
         <meta name="description" content="Bao Bao NFT mint page" />
@@ -95,29 +95,29 @@ export default function Home() {
       <section>
         <div
           style={{ display: `${isOpen ? "none" : ""}` }}
-          className="flex mt-[5%]  mx-24"
+          className="flex flex-col box-border items-center justify-center sm:flex-row sm:w-screen sm:h-screen  sm:fixed"
         >
           <img
-            className="border-[8px] w-[40%] h-[40%] border-black rounded-[10%]"
+            className="self-center border-[8px] border-black mt-[15%] w-[40%] mb-[20px] rounded-[10%] sm:w-[30%] sm:mt-[-8%] sm:mb-0"
             src="./bao-bao.png"
             alt="BAO-BAO"
           />
-          <div className="m-10 flex flex-col justify-between">
-            <h2 className={`${style.singleDay} text-white text-5xl`}>
+          <div className=" flex flex-col justify-center items-center box-border sm:w-[60%] sm:items-start sm:pl-[5%] sm:mt-[-8%]">
+            <h2 className={`${style.singleDay} text-white text-[7vw] text-center my-3 sm:text-[3vw] sm:my-0 sm:text-left sm:my-5`}>
               Join the revolution now!
             </h2>
-            <h1 className={`${style.shojumaru} text-white text-5xl`}>
+            <h1 className={`${style.shojumaru} text-white text-5xl text-center my-3 sm:my-0 sm:text-left sm:max-w-[100%]`}>
               MINT YOUR{" "}
-              <span className={`${style.baobao} text-[#1dfefe]`}>BAO-BAO</span>
+              <span className={`${style.baobao} text-[#1dfefe] text-center my-3 sm:my-0 sm:text-left`}>BAO-BAO</span>
             </h1>
-            <p className="w-[80%] text-white">
+            <p className="w-[100%] max-w-[90%] text-white text-center my-5 sm:text-left sm:max-w-[70%]">
               Lorem ipsum dolor sit, amet consectetur adipisicing elit.
               Sapiente, magni id ut aperiam quisquam vitae natus in, illo
               molestias, fugit dolores? Veritatis ut dolorum in incidunt, ad
               porro! Ullam necessitatibus laborum quo ea soluta? Tempore debitis
               sed amet ipsam excepturi!
             </p>
-            <div className="btn-wrapper">{returnButton()}</div>
+            <div className="self-center my-5 btn-wrapper sm:self-start">{returnButton()}</div>
           </div>
         </div>
       </section>

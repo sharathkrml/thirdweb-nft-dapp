@@ -10,7 +10,7 @@ function WalletComponent() {
   const connectCoinbaseWallet = useCoinbaseWallet();
   const connectWalletConnect = useWalletConnect();
   return (
-    <div className="flex justify-around items-center h-[100%] lg:flex-row sm:flex-col">
+    <div className="flex justify-around items-center h-[100%] lg:flex-row flex-col sm:flex-row">
       <div className="metamask">
         <button
           onClick={connectMetamask}

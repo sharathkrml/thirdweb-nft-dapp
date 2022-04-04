@@ -59,19 +59,19 @@ function Inventory() {
   const renderNFT = (nft, i) => {
     return (
       <div
-        className="relative my-10 cursor-pointer hover:-translate-y-2"
+        className="relative  my-10 cursor-pointer hover:-translate-y-2 box-border flex flex-col m-[5%] "
         onClick={() => router.push("/inventory/" + nft.metadata.id.toString())}
       >
-        <img src={nft.metadata.image} alt={i} />
+        <img src={nft.metadata.image} alt={i} className="border-[8px] border-black rounded-[10%] w-[60%] self-center sm:border-none sm:w-[80%]"/>
         {constants.AddressZero === nft.owner && (
-          <p className="absolute top-2 -left-5 text-slate-200 bg-red-500 px-2 text-lg -rotate-45">
+          <p className="absolute top-5 left-10 text-slate-200  bg-red-500 px-2 text-lg -rotate-45 ">
             not minted
           </p>
         )}
-        <h3>{nft.metadata.name}</h3>
-        <p>{nft.metadata.description.substring(0, 50)}</p>
+        <h3 className="text-white text-[14vw] self-center text-center font-bold max-w-[80%] sm:text-[2.5vw]">{nft.metadata.name}</h3>
+        <p className="text-white max-w-[100%] self-center text-center max-w-[70%] my-4 text-[5vw] sm:text-[1vw] sm:max-w-[75%] sm:text-left">{nft.metadata.description.substring(0, 50)}</p>
         {nft.owner !== constants.AddressZero ? (
-          <p>
+          <p className="text-white self-start text-[5vw] ml-[15%] sm:text-[1vw] ">
             Owner:{" "}
             {nft.owner === address ? "You" : nft.owner.substring(0, 9) + "..."}
           </p>
@@ -82,7 +82,7 @@ function Inventory() {
     );
   };
   return (
-    <div className={`${style.main} min-h-screen`} id="root">
+    <div className={`${style.main} min-h-screen w-screen`} id="root">
       <Head>
         <title>Bao Bao</title>
         <meta name="description" content="Bao Bao NFT mint page" />
