@@ -9,7 +9,7 @@ function Navbar({ toggleModal, main, nft }) {
   const disconnect = useDisconnect();
   return (
     <nav>
-      <div className={`flex ${main ? "justify-end" : "justify-between"} `}>
+      <div className={`flex ${main ? "justify-end" : "justify-between"} w-screen`}>
         {!main && (
           <button
             onClick={() => {

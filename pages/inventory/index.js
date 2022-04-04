@@ -59,19 +59,19 @@ function Inventory() {
   const renderNFT = (nft, i) => {
     return (
       <div
-        className="relative  my-10 cursor-pointer hover:-translate-y-2 box-border flex flex-col m-[5%] "
+        className="relative box-border my-10 w-[100%] h-auto min-h-[50vh] sm:w-[60%] sm:min-h-[45vh] sm:h-auto sm:my-10  flex flex-col cursor-pointer hover:-translate-y-2 px-[15%] sm:px-0"
         onClick={() => router.push("/inventory/" + nft.metadata.id.toString())}
       >
-        <img src={nft.metadata.image} alt={i} className="border-[8px] border-black rounded-[10%] w-[60%] self-center sm:border-none sm:w-[80%]"/>
+        <img src={nft.metadata.image} alt={i} className="border-[8px] border-black rounded-[10%] w-[75%] sm:w-[100%] self-center"/>
         {constants.AddressZero === nft.owner && (
-          <p className="absolute top-5 left-10 text-slate-200  bg-red-500 px-2 text-lg -rotate-45 ">
+          <p className="absolute top-[5%] left-[15%] sm:top-5 sm:-left-5 text-slate-200  bg-red-500 px-2 text-lg -rotate-45 ">
             not minted
           </p>
         )}
-        <h3 className="text-white text-[14vw] self-center text-center font-bold max-w-[80%] sm:text-[2.5vw]">{nft.metadata.name}</h3>
-        <p className="text-white max-w-[100%] self-center text-center max-w-[70%] my-4 text-[5vw] sm:text-[1vw] sm:max-w-[75%] sm:text-left">{nft.metadata.description.substring(0, 50)}</p>
+        <h3 className="self-center text-[10vw] max-w-[80%] text-center leading-10 mt-1 sm:text-[3vw] sm:max-w-[80%] sm:self-center text-white font-semibold sm:leading-15 sm:text-center sm:mt-1">{nft.metadata.name}</h3>
+        <p className="self-center text-center text-[4vw] my-2 sm:text-[1vw] sm:self-center sm:text-center text-white sm:my-3">{nft.metadata.description.substring(0, 50)}</p>
         {nft.owner !== constants.AddressZero ? (
-          <p className="text-white self-start text-[5vw] ml-[15%] sm:text-[1vw] ">
+          <p className="ml-5 sm:ml-7 text-white sm:text-[1vw] sm:ml-0">
             Owner:{" "}
             {nft.owner === address ? "You" : nft.owner.substring(0, 9) + "..."}
           </p>
@@ -82,7 +82,7 @@ function Inventory() {
     );
   };
   return (
-    <div className={`${style.main} min-h-screen w-screen`} id="root">
+    <div className={`${style.main} h-screen w-screen flex flex-col items-center overflow-hidden`} id="root">
       <Head>
         <title>Bao Bao</title>
         <meta name="description" content="Bao Bao NFT mint page" />
@@ -99,7 +99,7 @@ function Inventory() {
         />
       </Head>
       <Navbar toggleModal={toggleModal} />
-      <section>
+      <section className="h-[12%] sm:w-[80%] sm:h-[10%] flex items-center justify-center">
         <div style={{ display: `${isOpen ? "none" : ""}` }}>
           <div className="flex justify-center">
             <div>
@@ -127,13 +127,13 @@ function Inventory() {
           </div>
         </div>
       </section>
-      <section className="flex items-center justify-center">
+      <section className="w-[90%] h-[80%] sm:w-[90%] sm:h-[80%] flex sm:flex-col sm:box-border">
         {loading ? (
-          <div className="flex h-[55vh] items-center justify-center">
-            <h1>Loading</h1>
+          <div className="w-[100%] h-[100%] flex items-center justify-center">
+            <h1 className="text-white">Loading...</h1>
           </div>
         ) : (
-          <div className="grid lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2">
+          <div className="flex flex-col items-center sm:w-[100%] sm:h-[100%] sm:grid sm:grid-cols-3 sm:place-items-center sm:pt-[5%] sm:gap-y-20 overflow-y-scroll scrollbar-hide sm:scrollbar-hide">
             {selectAllNft
               ? allNfts.map((nft, i) => {
                   return renderNFT(nft, i);

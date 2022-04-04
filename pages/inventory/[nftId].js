@@ -60,7 +60,7 @@ function NFTComponent() {
   }, [address]);
 
   return (
-    <div className={`${style.main} min-h-screen w-screen box-border`} id="root">
+    <div className={`${style.main} min-h-screen w-screen box-border overflow-hidden`} id="root">
       <Head>
         <title>Bao Bao</title>
         <meta name="description" content="Bao Bao NFT mint page" />
@@ -78,13 +78,13 @@ function NFTComponent() {
       </Head>
       <Navbar toggleModal={toggleModal} nft />
       <section>
-        <div style={{ display: `${isOpen ? "none" : ""} w-screen min-h-screen` }}>
+        <div style={{ display: `${isOpen ? "none" : ""} w-screen h-screen ` }}>
           {loading ? (
-            <div className="flex h-[75vh] items-center justify-center">
+            <div className="flex h-screen items-center justify-center">
               <h1 className="text-white">Loading...</h1>
             </div>
           ) : (
-            <div className="flex  items-center justify-center w-screen h-screen">
+            <div className="flex w-[100%] h-[100%]  items-center justify-center sm:w-screen sm:h-[80vh]">
               <div className="flex flex-col  box-border items-center sm:w-[80%] sm:mt-0 sm:flex-row sm:items-center sm:justify-center">
                 <img src={nftData.metadata.image} alt="im" className="w-[50%] min-w-[200px] border-[8px] border-black mt-0 mr-0 rounded-[10%] sm:mt-[-5%] sm:w-[30%] sm:mr-[15%]"/>
                 <div className="details flex flex-col items-center w-screen mt-0 max-w-[80%] sm:w-[60%] sm:h-[60vh]  sm:items-start sm:pt-[1%]">
@@ -123,9 +123,9 @@ function NFTComponent() {
                     </>
                   )}
                   {address != nftData.owner && (
-                    <p className="text-white  text-left ">
+                    <p className="text-white my-2 font-bold text-[5vw] sm:text-[2vw] text-left self-start max-w-[75%]">
                       Owner :
-                      <br /> {nftData.owner}
+                      <br /> <span className="text-[3.5vw] font-light sm:text-[1vw]">{nftData.owner}</span>
                     </p>
                   )}
                 </div>
